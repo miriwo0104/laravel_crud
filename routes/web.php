@@ -27,3 +27,5 @@ Route::get('/output', 'ContentController@output')->name('output');
 Route::post('/delete', 'ContentController@delete')->name('delete');
 Route::get('/edit/{content_id}', 'ContentController@edit')->name('edit');
 Route::post('/update', 'ContentController@update')->name('update');
+
+Route::get('/status', 'StatusController@status')->name('status');
