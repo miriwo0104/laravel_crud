@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/db_check/index', 'DbCheckController@index');
+
 Route::get('/input', 'ContentController@input')->name('input');
 Route::post('/save', 'ContentController@save')->name('save');
 Route::get('/output', 'ContentController@output')->name('output');
