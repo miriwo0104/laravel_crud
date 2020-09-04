@@ -27,3 +27,6 @@ Route::get('/output', 'ContentController@output')->name('output');
 Route::post('/delete', 'ContentController@delete')->name('delete');
 Route::get('/edit/{content_id}', 'ContentController@edit')->name('edit');
 Route::post('/update', 'ContentController@update')->name('update');
+
+// 下記を追記する。
+Route::get('/config_check', 'ConfigCheckController@config_check')->name('config_check');
