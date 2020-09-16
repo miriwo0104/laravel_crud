@@ -13,7 +13,6 @@ class InquiryRequest extends FormRequest
      */
     public function authorize()
     {
-        // 下記を修正する
         return true;
     }
 
@@ -25,10 +24,18 @@ class InquiryRequest extends FormRequest
     public function rules()
     {
         return [
-            // 下記を追記する
             'content' => ['required'],
             'name' => ['required'],
-            // 上記までを追記する
         ];
     }
+
+    // 下記を追記する
+    public function messages()
+    {
+        return [
+            'content.required' => '内容を記入してください。',
+            'name.required' => '内容を記入してください。',
+        ];
+    }
+    // 上記までを追記する
 }

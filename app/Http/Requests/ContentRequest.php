@@ -13,7 +13,6 @@ class ContentRequest extends FormRequest
      */
     public function authorize()
     {
-        // 下記を修正する
         return true;
     }
 
@@ -25,8 +24,17 @@ class ContentRequest extends FormRequest
     public function rules()
     {
         return [
-            // 下記を追記する
             'content' => ['required', 'max: 140'],
         ];
     }
+
+    // 下記を追記する
+    public function messages()
+    {
+        return [
+            'content.required' => '内容を記入してください。',
+            'content.max' => '投稿内容は140文字以下にしてください。',
+        ];
+    }
+    // 上記までを追記する
 }
