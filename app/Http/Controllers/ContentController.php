@@ -14,6 +14,13 @@ class ContentController extends Controller
 
     public function save(Request $request)
     {
+        // 下記を追記する
+        $rules = [
+            'content' => ['required', 'max: 140'],
+        ];
+
+        $this->validate($request, $rules);
+        // 上記までを追記する
         $input_content = new Content();
         $input_content->content = $request['content'];
         $input_content->save();
@@ -54,6 +61,13 @@ class ContentController extends Controller
 
     public function update(Request $request)
     {
+        // 下記を追記する
+        $rules = [
+            'content' => ['required', 'max: 140'],
+        ];
+
+        $this->validate($request, $rules);
+        // 上記までを追記する
         $contents_update_query = Content::select('*');
         $contents_update_query->where('id', $request['content_id']);
         $update_contents = $contents_update_query->get();

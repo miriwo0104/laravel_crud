@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//下記を追記する
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\SendMail;
-//上記までを追記する
 
 class InquiryController extends Controller
 {
-    //下記を追記する
     public function input()
     {
         $user_infos = Auth::user();
@@ -22,9 +19,16 @@ class InquiryController extends Controller
 
     public function send(Request $request)
     {
+        // 下記を追記する
+        $rules = [
+            'content' => ['required'],
+            'name' => ['required'],
+        ];
+
+        $this->validate($request, $rules);
+        // 上記までを追記する
         $inquiry_content = $request->all();
         Mail::to('admin@example')->send(new SendMail($inquiry_content));
         return redirect(route('home'));
     }
-    //上記までを追記する
 }
