@@ -20,14 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-<<<<<<< HEAD
 // 下記を追記
 Route::get('/inquiry/input', 'InquiryController@input')->name('inquiry.input');
 Route::post('/inquiry/send', 'InquiryController@send')->name('inquiry.send');
 // 上記までを追記
-=======
-
->>>>>>> 8c9947f03e6d8709374bdadfa95e3e1262a501ef
 Route::get('/input', 'ContentController@input')->name('input');
 Route::post('/save', 'ContentController@save')->name('save');
 Route::get('/output', 'ContentController@output')->name('output');
