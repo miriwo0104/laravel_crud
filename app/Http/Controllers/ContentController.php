@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Content;
+// 下記を追記する
+use App\Http\Requests\ContentRequest;
 
 class ContentController extends Controller
 {
@@ -12,17 +14,13 @@ class ContentController extends Controller
         return view('contents.input');
     }
 
-    public function save(Request $request)
+    // 下記を修正する
+    public function save(ContentRequest $contentRequest)
     {
-        // 下記を追記する
-        $rules = [
-            'content' => ['required', 'max: 140'],
-        ];
-
-        $this->validate($request, $rules);
-        // 上記までを追記する
+        // バリデーションルールとバリデート命令を削除する
         $input_content = new Content();
-        $input_content->content = $request['content'];
+        // 下記を修正する
+        $input_content->content = $contentRequest['content'];
         $input_content->save();
         
         return redirect('/output');
@@ -59,21 +57,18 @@ class ContentController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    // 下記を修正する
+    public function update(ContentRequest $contentRequest)
     {
-        // 下記を追記する
-        $rules = [
-            'content' => ['required', 'max: 140'],
-        ];
-
-        $this->validate($request, $rules);
-        // 上記までを追記する
+        // バリデーションルールとバリデート命令を削除する
         $contents_update_query = Content::select('*');
-        $contents_update_query->where('id', $request['content_id']);
+        // 下記を修正する
+        $contents_update_query->where('id', $contentRequest['content_id']);
         $update_contents = $contents_update_query->get();
 
         $update_content = $update_contents[0];
-        $update_content->content = $request['content'];
+        // 下記を修正する
+        $update_content->content = $contentRequest['content'];
         $update_content->save();
 
         return redirect('/output');

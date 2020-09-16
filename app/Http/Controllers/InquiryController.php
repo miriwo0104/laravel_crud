@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\SendMail;
+// 下記を追記する
+use App\Http\Requests\InquiryRequest;
 
 class InquiryController extends Controller
 {
@@ -16,18 +18,13 @@ class InquiryController extends Controller
             'user_infos' => $user_infos,
         ]);
     }
-
-    public function send(Request $request)
+    
+    // 下記を修正する
+    public function send(InquiryRequest $inquiryRequest)
     {
-        // 下記を追記する
-        $rules = [
-            'content' => ['required'],
-            'name' => ['required'],
-        ];
-
-        $this->validate($request, $rules);
-        // 上記までを追記する
-        $inquiry_content = $request->all();
+        // バリデーションルールとバリデート命令を削除する
+        // 下記を修正する
+        $inquiry_content = $inquiryRequest->all();
         Mail::to('admin@example')->send(new SendMail($inquiry_content));
         return redirect(route('home'));
     }
