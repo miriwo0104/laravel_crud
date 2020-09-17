@@ -4,22 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Content;
-// 下記を追記する
 use App\Http\Requests\ContentRequest;
+// 下記を追記する
+use App\Services\ContentService;
 
 class ContentController extends Controller
 {
+    // 下記を追記する
+    private $contentService;
+
+    public function __construct(ContentService $contentService)
+    {
+        $this->contentService = $contentService;
+    }
+    // 上記までを追記する
+
     public function input()
     {
         return view('contents.input');
     }
 
-    // 下記を修正する
     public function save(ContentRequest $contentRequest)
     {
-        // バリデーションルールとバリデート命令を削除する
         $input_content = new Content();
-        // 下記を修正する
         $input_content->content = $contentRequest['content'];
         $input_content->save();
         
@@ -28,8 +35,8 @@ class ContentController extends Controller
 
     public function output()
     {
-        $contents_get_query = Content::select('*');
-        $all_contents = $contents_get_query->get();
+        // 下記を修正する
+        $all_contents = $this->contentService->getContent();
         
         return view('contents.output', [
             'all_contents' => $all_contents,
@@ -47,9 +54,7 @@ class ContentController extends Controller
 
     public function edit($content_id)
     {
-        $contents_edit_query = Content::select('*');
-        $contents_edit_query->where('id', $content_id);
-        $edit_contents = $contents_edit_query->get();
+        $edit_contents = $this->contentService->getEditContent($content_id);
         $edit_content = $edit_contents[0];
 
         return view('contents.edit', [
@@ -57,17 +62,13 @@ class ContentController extends Controller
         ]);
     }
 
-    // 下記を修正する
     public function update(ContentRequest $contentRequest)
     {
-        // バリデーションルールとバリデート命令を削除する
         $contents_update_query = Content::select('*');
-        // 下記を修正する
         $contents_update_query->where('id', $contentRequest['content_id']);
         $update_contents = $contents_update_query->get();
 
         $update_content = $update_contents[0];
-        // 下記を修正する
         $update_content->content = $contentRequest['content'];
         $update_content->save();
 
